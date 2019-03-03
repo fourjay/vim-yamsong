@@ -8,7 +8,7 @@ function! yamsong#split() abort
     execute 'w ' . l:file
     execute '!chmod +x ' . l:file
     let &modified = l:save_modified
-    execute 'e ' . l:file
+    execute 'vsplit ' . l:file
     let b:original_file = l:original
     command! -buffer Toggle call yamsong#toggle()
     call yamsong#to_yaml()
