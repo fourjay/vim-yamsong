@@ -15,15 +15,16 @@ function! yamsong#split() abort
     " Convert Toggle
     command! -buffer Toggle call yamsong#toggle()
     " final commit
-    command! -buffer Copy :%diffput
+    command! -buffer Write :%diffput
+
     " initial conversion
     call yamsong#to_yaml()
     nnoremap <buffer> <Cr> :Toggle<Cr>
-    nnoremap <buffer> <nowait> q :q<cr>
+    nnoremap <buffer> <nowait> q :diffoff<bar>:bdelete<cr>
 endfunction
  
 function! yamsong#toggle() abort
-    if &filetype ==# 'yaml'
+    if &filetype =~# 'yaml'
         call yamsong#to_json()
     " account for compound filetype
     elseif  &filetype =~# 'json'
