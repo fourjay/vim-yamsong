@@ -17,5 +17,5 @@ file = parser.parse_args().json_file
 indent_level = parser.parse_args().indent_level
 
 body = yaml.safe_load(file.read())
-json_body = json.dumps(body, indent=indent_level, separators=(',', ': '))
+json_body = json.dumps(body, indent=indent_level, sort_keys=True, separators=(',', ': '))
 print(json_body, end='')
