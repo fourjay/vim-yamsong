@@ -4,15 +4,19 @@ function! yamsong#split() abort
     let l:original_filename = expand('%')
     let l:original_filetype = &filetype
 
+    " copy buffer to non-buffer
     silent vsplit __yamsong__ | put =getbufline('#',1,'$') | 1d
     setlocal buftype=nofile
 
     let b:yamsong = {
                 \       'original_filename': l:original_filename,
                 \       'original_filetype': l:original_filetype,
-                \}
+                \ }
+    " Convert Toggle
     command! -buffer Toggle call yamsong#toggle()
+    " final commit
     command! -buffer Copy :%diffput
+    " initial conversion
     call yamsong#to_yaml()
     nnoremap <buffer> <Cr> :Toggle<Cr>
     nnoremap <buffer> <nowait> q :q<cr>
@@ -21,6 +25,7 @@ endfunction
 function! yamsong#toggle() abort
     if &filetype ==# 'yaml'
         call yamsong#to_json()
+    " account for compound filetype
     elseif  &filetype =~# 'json'
         call yamsong#to_yaml()
     else
