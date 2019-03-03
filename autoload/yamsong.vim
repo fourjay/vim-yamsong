@@ -1,24 +1,23 @@
 let s:path = expand('<sfile>:p:h:h')
 
 function! yamsong#split() abort
-    let l:file = tempname()
-    let l:original_file = expand('%')
+    let l:original_filename = expand('%')
     let l:original_filetype = &filetype
-    echom 'l:file is ' . l:file
-    let l:save_modified = &modified
-    execute 'w ' . l:file
-    execute '!chmod +x ' . l:file
-    let &modified = l:save_modified
-    execute 'vsplit ' . l:file
-    command! -buffer Toggle call yamsong#toggle()
-    nnoremap <buffer> <Cr> :Toggle<Cr>
+
+    silent vsplit __yamsong__ | put =getbufline('#',1,'$') | 1d
+    setlocal buftype=nofile
+
     let b:yamsong = {
-                \       'original_file':     l:original_file,
+                \       'original_filename': l:original_filename,
                 \       'original_filetype': l:original_filetype,
                 \}
+    command! -buffer Toggle call yamsong#toggle()
+    command! -buffer Copy :%diffput
     call yamsong#to_yaml()
+    nnoremap <buffer> <Cr> :Toggle<Cr>
+    nnoremap <buffer> <nowait> q :q<cr>
 endfunction
-
+ 
 function! yamsong#toggle() abort
     if &filetype ==# 'yaml'
         call yamsong#to_json()
@@ -29,15 +28,18 @@ function! yamsong#toggle() abort
     endif
 endfunction
 
+function! yamsong#convert(direction) abort
+    silent execute '%! ' . s:path . '/bin/' .a:direction . '.py'
+endfunction
+
 function! yamsong#to_yaml() abort
-    silent execute '%!' . s:path . '/bin/j2y.py'
+    call yamsong#convert('j2y')
     setlocal filetype=yaml
     diffoff
 endfunction
 
 function! yamsong#to_json() abort
-    echom 'silent execute' .  '%!' . s:path . '/bin/y2j.py'
-    silent execute '%!' . s:path . '/bin/y2j.py'
+    call yamsong#convert('y2j')
     execute 'setlocal filetype=' . b:yamsong.original_filetype
     windo diffthis
 endfunction
