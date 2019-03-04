@@ -1,4 +1,4 @@
-# Edit JSON as YAML
+# Use vim to Edit JSON as YAML
 
 YAML is a superset of JSON :-)
 
