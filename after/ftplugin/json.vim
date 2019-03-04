@@ -8,8 +8,7 @@ let g:did_json = '1'
 let s:save_cpo = &cpoptions
 set compatible&vim
 
-command! -buffer Json2yaml call yamsong#split()
+command! -buffer Edityaml call yamsong#split()
 "
 " Return vim to users choice
 let &cpoptions = s:save_cpo
-
