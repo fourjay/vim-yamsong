@@ -19,11 +19,12 @@ function! yamsong#split() abort
     " initial conversion
     call yamsong#to_yaml()
     nnoremap <buffer> <Cr> :Toggle<Cr>
-    nnoremap <buffer> <nowait> q :diffoff<bar>:bdelete<cr>
+    nnoremap <buffer> <nowait> q :call yamsong#close()<cr>
     " setup write override
     augroup yamsong
         autocmd!
         autocmd BufWriteCmd,FileWriteCmd __yamsong__ call yamsong#write()
+        autocmd BufLeave __yamsong__ call yamsong#close()
     augroup end
 endfunction
  
@@ -47,6 +48,11 @@ function! yamsong#write() abort
     " else put file
     %diffput
     diffoff
+    set buftype=nofile
+    bwipe
+endfunction
+
+function! yamsong#close() abort
     set buftype=nofile
     bwipe
 endfunction
