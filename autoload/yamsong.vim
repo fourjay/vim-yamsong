@@ -6,7 +6,6 @@ function! yamsong#split() abort
 
     " copy buffer to non-buffer
     silent vsplit __yamsong__ | put =getbufline('#',1,'$') | 1d
-    setlocal buftype=nofile
 
     let b:yamsong = {
                 \       'original_filename': l:original_filename,
@@ -21,6 +20,11 @@ function! yamsong#split() abort
     call yamsong#to_yaml()
     nnoremap <buffer> <Cr> :Toggle<Cr>
     nnoremap <buffer> <nowait> q :diffoff<bar>:bdelete<cr>
+    " setup write override
+    augroup yamsong
+        autocmd!
+        autocmd BufWriteCmd,FileWriteCmd __yamsong__ call yamsong#write()
+    augroup end
 endfunction
  
 function! yamsong#toggle() abort
@@ -36,13 +40,15 @@ endfunction
 
 function! yamsong#write() abort
     if &filetype =~# 'yaml'
-        echom 'converting to json for final approcal'
+        echom 'converting to json for final approval'
         call yamsong#to_json()
         return
     endif
+    " else put file
     %diffput
     diffoff
-    bdelete
+    set buftype=nofile
+    bwipe
 endfunction
 
 function! yamsong#convert(direction) abort
