@@ -24,16 +24,20 @@ If JSON |filetype| is set, a local command is created *EditAsyaml*
 This
 
 * opens a vertical split buffer
+
 * creates a YAML version of the current JSON file
+
 * Allows toggling the scratch buffer between formats, with Diff view to the
   original JSON buffer when scratch buffer is in JSON mode
 
 The scratch buffer is memory only. It adds a few additions.
 
-* A :Toggle function, mapped to <CR> to toggle the scratch buffer between
+* A buffer local :Toggle function, mapped to <CR> to toggle the scratch buffer
+  between
+
 * modes A buffer local command :Write to write the scratch JSON buffer back to
-* the
-  original JSON file.
+  the original JSON file.
+
 * A mostly intuitive remapping of write operations (via catching WriteCmd
   events) to write out changes to the primary JSON file
 
@@ -47,5 +51,7 @@ installs).
 
 The code is not inline, in part as it does not need to be, and in part to not
 require vim to be compiled with python3 support.
+
+TODO improve robustness of YAML <-> JSON conversion
 
 " vim:tw=78:ts=8:ft=help:norl:
