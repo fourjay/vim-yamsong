@@ -15,12 +15,12 @@ YAML is a superset of JSON
 
 JSON is consumed well by machines, but fidgity to write. YAML is much easier
 for humans to write by hand. This plugin provides a YAML scratch buffer to edit
-JSON in YAML
+JSON in YAML.
 
 ==============================================================================
 2. USAGE                                                        *yamsong-usage*
 
-If JSON |filetype| is set, a local command is created *Edityaml*
+If JSON |filetype| is set, a local command is created *EditAsyaml*
 This
 
 * opens a vertical split buffer
@@ -30,9 +30,12 @@ This
 
 The scratch buffer is memory only. It adds a few additions.
 
-* A :Toggle function, mapped to <CR> to toggle the scratch buffer between modes
-* A buffer local command :Write to write the scratch JSON buffer back to the
-* original JSON file.
+* A :Toggle function, mapped to <CR> to toggle the scratch buffer between
+* modes A buffer local command :Write to write the scratch JSON buffer back to
+* the
+  original JSON file.
+* A mostly intuitive remapping of write operations (via catching WriteCmd
+  events) to write out changes to the primary JSON file
 
 ==============================================================================
 3. OTHER                                                         *yamsong-other*
