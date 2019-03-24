@@ -11,7 +11,7 @@ In short, YAML is meant to be written by hand, JSON by programs.
 But it's not uncommon to create and edit JSON files by hand, often
 to configure other applications. This plugin helps me in that task.
 
-It exposes a single command in a JSON file, ``Edityaml`` which:
+It exposes a single command in a JSON file, ``EditAsyaml`` which:
 
 * opens a memory only vertical split with a YAML version of the JSON
 * Allows toggling between YAML and JSON versions
