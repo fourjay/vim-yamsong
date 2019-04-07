@@ -3,7 +3,7 @@ if ! executable('python3')
     finish
 endif
 let s:save_cpo = &cpoptions
-set compatible&vim
+set cpoptions&vim
 
 command! -buffer EditAsyaml call yamsong#split()
 
