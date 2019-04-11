@@ -2,7 +2,7 @@
 
 VIM REFERENCE MANUAL    by josef.fortier@gmail.com
 
-Help on using yamsong                                                    *yamsong*
+Help on using yamsong
 
 1. Introduction     |yamsong-intro|
 2. Usage            |yamsong-usage|
