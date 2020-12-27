@@ -4,14 +4,18 @@ function! yamsong#split() abort
     let l:original_filename = expand('%')
     let l:original_filetype = &filetype
 
+    " create new blank split
+    silent vsplit __yamsong__
+    normal! ggdG
+    set filetype=json
     " copy buffer to non-buffer
-    silent vsplit __yamsong__ | put =getbufline('#',1,'$') | 1d
+    put =getbufline('#',1,'$') | 1d
 
     let b:yamsong = {
                 \       'original_filename': l:original_filename,
                 \       'original_filetype': l:original_filetype,
                 \ }
-    " Convert Toggle
+    " Add Convert Toggle local commands
     command! -buffer Toggle call yamsong#toggle()
     " final commit
     command! -buffer Write call yamsong#write()
@@ -24,7 +28,7 @@ function! yamsong#split() abort
     augroup yamsong
         autocmd!
         autocmd BufWriteCmd,FileWriteCmd __yamsong__ call yamsong#write()
-        autocmd BufUnload __yamsong__ set buftype=nofile
+        autocmd BufWinLeave __yamsong__ call yamsong#close()
     augroup end
 endfunction
  
@@ -53,8 +57,12 @@ function! yamsong#write() abort
 endfunction
 
 function! yamsong#close() abort
+    b __yamsong__
+    normal! ggdG
     set buftype=nofile
-    bwipe
+    set filetype=none
+    normal! ggdG
+    close
 endfunction
 
 function! yamsong#convert(direction) abort
