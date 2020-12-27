@@ -69,7 +69,6 @@ function! yamsong#to_yaml() abort
     call yamsong#convert('j2y')
     setlocal filetype=yaml
     diffoff
-    g/^\S/normal O
 endfunction
 
 function! yamsong#to_json() abort
