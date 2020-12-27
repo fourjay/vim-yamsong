@@ -57,10 +57,10 @@ function! yamsong#close() abort
 endfunction
 
 function! yamsong#convert(direction) abort
-    silent execute '%! ' . s:path . '/bin/' .a:direction . '.py'
+    silent execute '1,$! ' . s:path . '/bin/' .a:direction . '.py'
     if v:shell_error
         echohl Error | echo 'issue converting' | echohl None
-        undo
+        silent undo
     endif
 endfunction
 
