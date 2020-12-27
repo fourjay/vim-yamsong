@@ -24,6 +24,7 @@ function! yamsong#split() abort
     augroup yamsong
         autocmd!
         autocmd BufWriteCmd,FileWriteCmd __yamsong__ call yamsong#write()
+        autocmd BufUnload __yamsong__ set buftype=nofile
     augroup end
 endfunction
  
