@@ -8,6 +8,7 @@ function! yamsong#split() abort
     silent vsplit __yamsong__
     normal! ggdG
     set filetype=json
+    set buftype=
     " copy buffer to non-buffer
     put =getbufline('#',1,'$') | 1d
 
